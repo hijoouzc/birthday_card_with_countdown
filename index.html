@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8" />
+    <title>Hoàng Mai Chi</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css"
+    />
+    <link rel="stylesheet" href="./style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik+Bubbles&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playwrite+PE:wght@100..400&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
+  </head>
+<body>
+    <!-- Màn hình đếm ngược -->
+    <div id="countdown-screen" class="container">
+        <h1 class="countdown-title">Đếm ngược đến sinh nhật</h1>
+        <div id="countdown">23:59:58</div>
+    </div>
+    
+    <!-- Màn hình bánh sinh nhật -->
+    <div id="birthday-screen" class="container">
+        <div>
+            <h1 class="boxTitle">Chúc Mừng Sinh Nhật Hoàng Mai Chi!</h1>
+        </div>
+        
+        <div class="candle-count-display">
+            Em đã cắm <span id="candleCount">0</span> ngọn nến rùi nèk 🕯️
+        </div>
+          <!-- nhắc nhở -->
+        <div class="candle-count-display">
+            <p id="candleReminder" style="color: #f0e4d0; font-weight: bold; margin-bottom: 15px;">
+                Hãy cắm đủ 9 ngọn nến để bắt đầu thổi!
+            </p>
+        </div>
+
+        <!-- bánh sinh nhật -->
+        <div class="cake">
+            <div class="plate"></div>
+            <div class="layer layer-bottom"></div>
+            <div class="layer layer-middle"></div>
+            <div class="layer layer-top"></div>
+            <div class="icing"></div>
+            <div class="drip drip1"></div>
+            <div class="drip drip2"></div>
+            <div class="drip drip3"></div>
+        </div>
+        
+        <div class="candle-count-display">
+            <p> Thổi vào microphone để thổi tắt nến</p>
+            <p class="microphone-error" style="display:none;color:red;">Microphone không khả dụng. Vui lòng sử dụng nút bên dưới.</p>
+        </div>
+    </div>
+    
+    <!-- Màn hình đếm ngược ước -->
+    <div id="wish-screen" class="container">
+        <h1 class="wish-title">Hãy ước điều gì đó...</h1>
+        <div id="wish-timer" class="wish-timer">60</div>
+    </div>
+    
+    <!-- Màn hình thiệp -->
+    <div id="card-screen" class="container">
+        <div class="card">
+            <div class="card-inner">
+                <div class="card-front">
+                    <h2>Chúc Mừng Sinh Nhật!</h2>
+                    <p>Nhấn để mở thiệp</p>
+                </div>
+                <div class="card-back">
+                    <div id="message" class="message"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <audio id="typing-sound">
+        <source src="https://cdn.freesound.org/previews/254/254193_4613603-lq.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+    
+    <script src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.3.2"></script>
+</body>
+</html>
