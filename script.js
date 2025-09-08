@@ -149,7 +149,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         let average = sum / bufferLength;
 
-        return average > 10; // độ nhạy
+        return average > 30; // độ nhạy
     }
 
     function blowOutCandles() {
@@ -294,7 +294,7 @@ function startWish() {
 
     clearInterval(fireworksInterval);
 
-    let timeLeft = 10;
+    let timeLeft = 60;
     wishTimerElement.textContent = timeLeft;
 
     wishTimerInterval = setInterval(() => {
