@@ -11,30 +11,34 @@
     <link rel="stylesheet" href="./style.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Rubik+Bubbles&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Playwrite+PE:wght@100..400&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
   </head>
 <body>
     <!-- Màn hình đếm ngược -->
     <div id="countdown-screen" class="container">
-        <h1 class="countdown-title">Đếm ngược đến sinh nhật</h1>
-        <div id="countdown">23:59:58</div>
+        <h1 class="countdown-title">Em biết sắp có gì xảy ra hong ?</h1>
+        <div class="countdown-title">Chuẩn bị nha!</div>
+        <div id="countdown">23:59:57</div>
+        <div id="date-display">8/9/2025</div>
     </div>
     
     <!-- Màn hình bánh sinh nhật -->
     <div id="birthday-screen" class="container">
+        <img class="picture picture1" style="--time: 0s" src="image.png" alt="">
+        <img class="picture picture2" style="--time: 1s" src="image2.png" alt="">
         <div>
-            <h1 class="boxTitle">Chúc Mừng Sinh Nhật Hoàng Mai Chi!</h1>
+            <h1 class="boxTitle">Happy Birthday to My Love 🎉 🎂 !</h1>
         </div>
         
         <div class="candle-count-display">
-            Em đã cắm <span id="candleCount">0</span> ngọn nến rùi nèk 🕯️
+            <span id="candleCount">0</span> <span style="font-size: 45px; margin-top: 15px; font-weight: bold;">🕯️</span>
         </div>
           <!-- nhắc nhở -->
         <div class="candle-count-display">
-            <p id="candleReminder" style="color: #f0e4d0; font-weight: bold; margin-bottom: 15px;">
-                Hãy cắm đủ 9 ngọn nến để bắt đầu thổi!
+            <p id="candleReminder">
+                em cắm 9 cái nến xong thổi hếc sức nhoa!
             </p>
         </div>
 
@@ -48,11 +52,6 @@
             <div class="drip drip1"></div>
             <div class="drip drip2"></div>
             <div class="drip drip3"></div>
-        </div>
-        
-        <div class="candle-count-display">
-            <p> Thổi vào microphone để thổi tắt nến</p>
-            <p class="microphone-error" style="display:none;color:red;">Microphone không khả dụng. Vui lòng sử dụng nút bên dưới.</p>
         </div>
     </div>
     
@@ -79,7 +78,6 @@
     
     <audio id="typing-sound">
         <source src="https://cdn.freesound.org/previews/254/254193_4613603-lq.mp3" type="audio/mpeg">
-        Your browser does not support the audio element.
     </audio>
     
     <script src="script.js"></script>

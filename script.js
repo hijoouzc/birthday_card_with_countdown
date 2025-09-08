@@ -2,11 +2,14 @@
 let countdownInterval;
 let wishTimerInterval;
 let fireworksInterval;
+let starsInterval;
 let typingInterval;
-let music = new Audio('hbd.mp3');
+let music = new Audio('happybirthday.mp3');
+let song = new Audio('song.mp3');
 
 // Phần tử DOM
 const countdownScreen = document.getElementById('countdown-screen');
+const dateDisplay = document.getElementById('date-display'); 
 const birthdayScreen = document.getElementById('birthday-screen');
 const wishScreen = document.getElementById('wish-screen');
 const cardScreen = document.getElementById('card-screen');
@@ -18,16 +21,25 @@ const typingSound = document.getElementById('typing-sound');
 const candleCountDisplay = document.getElementById('candleCount');
 
 // Tin nhắn trong thiệp
-const birthdayMessage = `Chúc mừng sinh nhật lần thứ 9!\n\nChúc bạn luôn mạnh khỏe, hạnh phúc và gặp nhiều may mắn trong cuộc sống.\n\nHãy luôn giữ nụ cười trên môi và theo đuổi những ước mơ của mình.\n\nThân ái!`;
+const birthdayMessage = `Chúc mừng sinh nhật em iu nhaaaa 💗\n\n Cuối cùng cũng đã đến ngày 9/9/2025 rồi đó, thấy nhanh vô cùng chưa. Đến lúc khép lại tuổi 19 quá nhiều sự kiện, mở ra tuổi 20 - khởi đầu mới. Xong bây giờ bằng tuổi anh rồi đó, lên đầu 2 cái là thấy khác biệt hẳn ha.\n\n Mong em hãy luôn giữ gìn sức khoẻ, đi đường an toàn, về nhà cẩn thận, và có những giấc ngủ ngon!\n\n Mong cuộc đời đối xử nhẹ nhàng với em, mong những ước muốn của em dù bất kể như nào cũng sẽ dần dần thành hiện thực.\n\nYêu em, Hoàng Mai Chi!`;
 
 // Thiết lập thời gian đếm ngược
 const targetDate = new Date('2025-09-09T00:00:00');
 
-// Hàm bắt đầu đếm ngược
+
 function startCountdown() {
-    let currentTime = new Date('2025-09-08T23:59:58');
+    if (countdownInterval) {
+        clearInterval(countdownInterval);
+    }
+    
+    let currentTime = new Date('2025-09-08T23:59:57');
+    dateDisplay.textContent = '8/9/2025';
+    createStars();
 
     countdownInterval = setInterval(() => {
+        // Cập nhật thời gian thực mỗi giây
+        currentTime = new Date(currentTime.getTime() + 1000);
+        
         const h = currentTime.getHours();
         const m = currentTime.getMinutes();
         const s = currentTime.getSeconds();
@@ -35,13 +47,44 @@ function startCountdown() {
         countdownElement.textContent = `${formatTime(h)}:${formatTime(m)}:${formatTime(s)}`;
 
         if (h === 0 && m === 0 && s === 0) {
+            dateDisplay.textContent = '9/9/2025';
             clearInterval(countdownInterval);
             showBirthdayCake();
             return;
         }
-
-        currentTime.setSeconds(currentTime.getSeconds() + 1);
     }, 1000);
+}
+
+// Hàm hiển thị nút play nếu tự động phát bị chặn
+function showPlayButton() {
+    // Kiểm tra nếu nút đã tồn tại thì không tạo lại
+    if (document.getElementById('playButton')) {
+        return;
+    }
+    
+    const playButton = document.createElement('button');
+    playButton.id = 'playButton'; // Thêm ID để kiểm tra
+    playButton.textContent = ' 👆🏻 ';
+    playButton.style.fontFamily = '"Lora", serif';
+    playButton.style.fontSize = '50px';
+    playButton.style.position = 'absolute';
+    playButton.style.top = '80%';
+    playButton.style.padding = '10px 15px';
+    playButton.style.backgroundColor = '#d7e7f3ff';
+    playButton.style.color = '#5bc7f6';
+    playButton.style.border = '#24aae4ff 10px solid';
+    playButton.style.borderRadius = '30px';
+    playButton.style.cursor = 'pointer';
+    playButton.style.zIndex = '1000';
+    
+    document.body.appendChild(playButton);
+
+    playButton.addEventListener('click', () => {
+        // Xóa nút sau khi click
+        playButton.remove();
+        // Bắt đầu countdown
+        startCountdown();
+    });
 }
 
 // Định dạng thời gian
@@ -62,11 +105,12 @@ document.addEventListener("DOMContentLoaded", function () {
         candleCountDisplay.textContent = activeCandles;
 
         if (activeCandles >= 9) {
-            document.getElementById("candleReminder").textContent = "Bạn đã cắm đủ 9 ngọn nến, hãy thổi để dập!";
-            document.getElementById("candleReminder").style.color = "lime";
+            document.getElementById("candleReminder").textContent = "ôi ôi đủ nến rùi, dừng lại thổi thui nào";
+            document.getElementById("candleReminder").style.color = "#1cee2eff";
+            document.getElementById("candleCount").style.color = "#1cee2eff";
         } else {
-            document.getElementById("candleReminder").textContent = "Hãy cắm đủ 9 ngọn nến để bắt đầu thổi!";
-            document.getElementById("candleReminder").style.color = "yellow";
+            document.getElementById("candleReminder").textContent = "em cắm 9 cái nến xong thổi hếc sức nhoa!";
+            document.getElementById("candleReminder").style.color = "#69bce2";
         }
 
     }
@@ -152,15 +196,31 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // ----------------- Birthday Cake -----------------
 function showBirthdayCake() {
-    countdownScreen.style.display = 'none';
-    birthdayScreen.style.display = 'flex';
+    // Thêm hiệu ứng làm tối màn hình
+    countdownScreen.classList.add('screen-darken');
+    
+    // Sau 1 giây, ẩn màn hình đếm ngược và hiện màn hình sinh nhật
+    setTimeout(() => {
+        countdownScreen.style.opacity = '0';
+        countdownScreen.style.display = 'none';
+        
+        // Hiển thị màn hình sinh nhật với hiệu ứng sáng dần
+        birthdayScreen.style.opacity = '1';
+        birthdayScreen.style.pointerEvents = 'auto';
+        birthdayScreen.classList.add('screen-brighten');
+
+        birthdayScreen.style.display = 'flex';
 
     music.play().catch(() => {
         document.body.addEventListener("click", () => music.play(), { once: true });
     });
 
-    createFireworks();
+        createFireworks();
+        clearInterval(starsInterval);
+        
+    }, 3000);
 }
+
 
 // ----------------- Fireworks -----------------
 function createFireworks() {
@@ -172,16 +232,14 @@ function createFireworks() {
 function createFirework() {
     const firework = document.createElement('div');
     firework.className = 'firework';
+    firework.innerHTML = '💗'; 
+    firework.style.fontSize = '50px'; // Kích thước của pháo hoa
 
     const x = Math.random() * window.innerWidth;
     const y = Math.random() * window.innerHeight;
 
-    const colors = ['#ff3366', '#ffcc00', '#00ccff', '#66ff33', '#ff9933', '#cc66ff'];
-    const color = colors[Math.floor(Math.random() * colors.length)];
-
     firework.style.left = `${x}px`;
     firework.style.top = `${y}px`;
-    firework.style.backgroundColor = color;
 
     const angle = Math.random() * Math.PI * 2;
     const distance = 100 + Math.random() * 200;
@@ -190,20 +248,49 @@ function createFirework() {
 
     firework.style.setProperty('--x', `${xOffset}px`);
     firework.style.setProperty('--y', `${yOffset}px`);
-    firework.style.animation = `firework-animation 1s forwards`;
+    firework.style.animation = `firework-animation 3s forwards`;
 
     document.body.appendChild(firework);
 
     setTimeout(() => firework.remove(), 1000);
 }
 
+function createStars() {
+    starsInterval = setInterval(() => {
+        createStar();
+    }, 300);
+}
+
+function createStar() {
+    const firework = document.createElement('div');
+    firework.className = 'firework';
+    firework.innerHTML = '⭐'; 
+    firework.style.fontSize = '50px'; // Kích thước của pháo hoa
+
+    const x = Math.random() * window.innerWidth;
+    const y = Math.random() * window.innerHeight;
+
+    firework.style.left = `${x}px`;
+    firework.style.top = `${y}px`;
+
+    const angle = Math.random() * Math.PI * 2;
+    const distance = 9999 + Math.random() * 500;
+    const xOffset = Math.cos(angle) * distance;
+    const yOffset = Math.sin(angle) * distance;
+
+    firework.style.setProperty('--x', `${xOffset}px`);
+    firework.style.setProperty('--y', `${yOffset}px`);
+    firework.style.animation = `firework-animation 90s forwards`;
+
+    document.body.appendChild(firework);
+
+    setTimeout(() => firework.remove(), 1000);
+}
 // ----------------- Wish countdown -----------------
 function startWish() {
     birthdayScreen.style.display = 'none';
     wishScreen.style.display = 'flex';
 
-    music.pause();
-    music.currentTime = 0;
 
     clearInterval(fireworksInterval);
 
@@ -217,6 +304,7 @@ function startWish() {
         if (timeLeft <= 0) {
             clearInterval(wishTimerInterval);
             showCard();
+            createStars();
         }
     }, 1000);
 }
@@ -225,9 +313,10 @@ function startWish() {
 function showCard() {
     wishScreen.style.display = 'none';
     cardScreen.style.display = 'flex';
-
     music.pause();
     music.currentTime = 0;
+    song.play();
+
 }
 
 // Xử lý mở thiệp
@@ -257,4 +346,4 @@ function typeMessage() {
 
 
 // ----------------- Start -----------------
-window.addEventListener('load', startCountdown);
+window.addEventListener('load', showPlayButton);
