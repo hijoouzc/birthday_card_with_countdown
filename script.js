@@ -149,7 +149,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         let average = sum / bufferLength;
 
-        return average > 30; // độ nhạy
+        return average > 10; // độ nhạy
     }
 
     function blowOutCandles() {
