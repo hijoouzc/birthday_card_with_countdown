@@ -294,7 +294,7 @@ function startWish() {
 
     clearInterval(fireworksInterval);
 
-    let timeLeft = 60;
+    let timeLeft = 60; // 60 giây
     wishTimerElement.textContent = timeLeft;
 
     wishTimerInterval = setInterval(() => {
